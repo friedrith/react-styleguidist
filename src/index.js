@@ -8,10 +8,22 @@ import renderStyleguide from './utils/renderStyleguide';
 // Examples code revision to rerender only code examples (not the whole page) when code changes
 let codeRevision = 0;
 
+let containerId = '';
+
+if (document.getElementById('app')) {
+	containerId = 'app';
+	/* eslint-disable no-console */
+	console.warn(
+		'Using id "app" to identify container DOM element is now depecrated. Please use "rsg-root" instead.'
+	);
+} else {
+	containerId = 'rsg-root';
+}
+
 const render = () => {
 	// eslint-disable-next-line import/no-unresolved
 	const styleguide = require('!!../loaders/styleguide-loader!./index.js');
-	ReactDOM.render(renderStyleguide(styleguide, codeRevision), document.getElementById('app'));
+	ReactDOM.render(renderStyleguide(styleguide, codeRevision), document.getElementById(containerId));
 };
 
 window.addEventListener('hashchange', renderStyleguide);
